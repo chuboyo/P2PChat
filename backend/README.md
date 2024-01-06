@@ -1,11 +1,11 @@
 P2PChat BACKEND
 
 This is the backend of a real time peer to peer messaging application developed using web sockets and django rest framework.
-The application is containerized using docker and requires docker and docker-compose to run.
+The application is containerized using docker and requires docker and docker compose to run.
 
 To Run this application follow the steps below:
 
-1. Make sure to cd into the <backend> directory using the command <cd backend/>
+1. Make sure to cd into the backend directory
 
 2. Run <docker-compose up --build> to build and start the application container.
 
