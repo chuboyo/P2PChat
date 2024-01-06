@@ -1,5 +1,3 @@
-from rest_framework import generics
-from .models import Message
 from .serializers import  UserRegisterSerializer, UserLoginSerializer
 from django.contrib.auth import get_user_model
 from rest_framework.exceptions import NotAuthenticated, AuthenticationFailed
@@ -10,9 +8,8 @@ from .helpers import get_token
 
 
 class UserViewset(viewsets.ModelViewSet):
-    """Viewset for list, create, retrieve(detail), update, delete, login, logout, forgot_password, 
-    reset_password, change_password, token_activate, activate and deactivate user views."""
-    
+    """Viewset for create, login and logout user views."""
+
     serializer_class = UserRegisterSerializer
     queryset = get_user_model().objects.all()
 
@@ -20,6 +17,8 @@ class UserViewset(viewsets.ModelViewSet):
     def get_serializer_class(self):
         if self.action == "login":
             return UserLoginSerializer
+        if self.action == "logout":
+            return UserLogoutSerializer
         return UserRegisterSerializer
 
 
@@ -36,3 +35,4 @@ class UserViewset(viewsets.ModelViewSet):
             return Response({"message": str(e)}, status=status.HTTP_401_UNAUTHORIZED)
         except NotAuthenticated as e:
             return Response({"message": str(e)}, status=status.HTTP_403_FORBIDDEN)
+        

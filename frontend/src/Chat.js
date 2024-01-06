@@ -147,6 +147,13 @@ function Chat() {
     }
   };
 
+  // handler to log user out and discard tokens
+  const logoutHandler = (e) => {
+    e.preventDefault();
+    setUsername("");
+    setToken("");
+  };
+
   return (
     <div>
       <h2
@@ -166,6 +173,7 @@ function Chat() {
           style={{
             boxShadow: "none",
             border: "0.0625rem solid #E4E7EC",
+            borderBottom: "none",
           }}
         >
           <div
@@ -266,6 +274,11 @@ function Chat() {
               </div>
             </div>
           )}
+          <div className="mt-5 text-center">
+            <button className="btn btn-danger" onClick={logoutHandler}>
+              Log Out
+            </button>
+          </div>
         </div>
       ) : (
         <div className="m-5 pt-5 pb-5 text-center">
