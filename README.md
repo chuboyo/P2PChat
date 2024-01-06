@@ -1,4 +1,5 @@
-P2P CHAT 💬 💬
+P2P CHAT 💬 💬  
+
 This is the official repo for a real time peer to peer messaging application. The application was built using Django for the backend API and React for the frontend.
 The backend API exposes endpoints for connecting to web socket consumers and for user authentication.
 The frontend provides an easy to navigate interface to demo the application.
