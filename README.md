@@ -15,6 +15,8 @@ To run code from this repository follow the instructions below:
 2. On a different terminal window, start the frontend server:
 
    - cd into the frontend directory
+  
+   - Install dependencies => npm install
 
    - Start the development server by running => npm start
 
