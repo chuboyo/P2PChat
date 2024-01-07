@@ -16,6 +16,21 @@ def get_token(user):
     token = Token.objects.get(user=user)
     return token
 
+# get authenticated user
+def get_user_helper(token):
+    user = Token.objects.get(
+            key=token,
+        ).user
+    return user
+
+# extract token adn room from query params
+def extract_params(params):
+    room = params[1]
+    token = params[0]
+    room = room.split("=")[1].replace("'", "")
+    token = token.split("=")[1].replace("'", "")
+    return token, room
+
 # decorator to propagate errors for websocket consumers
 def apply_wrappers(consumer_class):
     for method_name, method in list(consumer_class.__dict__.items()):

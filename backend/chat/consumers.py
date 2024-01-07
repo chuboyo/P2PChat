@@ -4,7 +4,7 @@ from channels.layers import get_channel_layer
 from channels.db import database_sync_to_async
 from .models import Message
 from rest_framework.authtoken.views import Token
-from .helpers import apply_wrappers
+from .helpers import apply_wrappers, extract_params, get_token, get_user_helper
 
 @apply_wrappers
 class ChatConsumer(AsyncWebsocketConsumer):
@@ -14,10 +14,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
     async def connect(self):
         if self.scope['query_string']:
             params = str(self.scope['query_string']).split("&")
-            room = params[1]
-            token = params[0]
-            room = room.split("=")[1].replace("'", "")
-            token = token.split("=")[1].replace("'", "")
+            token, room = extract_params(params)
         else:
             token = ""
             room= ""
@@ -55,10 +52,8 @@ class ChatConsumer(AsyncWebsocketConsumer):
     # get user token for authentication
     @database_sync_to_async
     def get_user(self, token):
-        user = Token.objects.get(
-            key=token,
-        )
-        return user.user
+        user = get_user_helper(token)
+        return user
 
     # receive message from websocket
     async def receive(self, text_data):
@@ -106,10 +101,7 @@ class ReadConsumer(AsyncWebsocketConsumer):
     async def connect(self):
         if self.scope['query_string']:
             params = str(self.scope['query_string']).split("&")
-            room = params[1]
-            token = params[0]
-            room = room.split("=")[1].replace("'", "")
-            token = token.split("=")[1].replace("'", "")
+            token, room = extract_params(params)
         else:
             token = ""
             room= ""
@@ -153,9 +145,7 @@ class ReadConsumer(AsyncWebsocketConsumer):
     # get user token for authentication
     @database_sync_to_async
     def get_user(self, token):
-        user = Token.objects.get(
-            key=token,
-        )
+        user = get_user_helper(token)
         return user
     
 
