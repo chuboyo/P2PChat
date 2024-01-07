@@ -45,4 +45,5 @@ class UserLoginSerializer(serializers.Serializer):
         user = get_user_model().objects.get(username=validated_data["username"])
         return user
     
+    
 

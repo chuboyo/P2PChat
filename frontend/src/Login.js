@@ -19,13 +19,9 @@ function Login() {
   const submitHandler = (e) => {
     e.preventDefault();
     axios
-      .post(
-        "http://127.0.0.1:8000/api/v1/users/login/",
-        { username: username, password: password },
-        config
-      )
+      .post("/users/login/", { username: username, password: password }, config)
       .then((resp) => {
-        navigate("/chat", {
+        navigate("/room", {
           state: {
             user: resp.data,
           },

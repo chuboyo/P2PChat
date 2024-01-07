@@ -17,8 +17,6 @@ class UserViewset(viewsets.ModelViewSet):
     def get_serializer_class(self):
         if self.action == "login":
             return UserLoginSerializer
-        if self.action == "logout":
-            return UserLogoutSerializer
         return UserRegisterSerializer
 
 
@@ -35,4 +33,6 @@ class UserViewset(viewsets.ModelViewSet):
             return Response({"message": str(e)}, status=status.HTTP_401_UNAUTHORIZED)
         except NotAuthenticated as e:
             return Response({"message": str(e)}, status=status.HTTP_403_FORBIDDEN)
+        
+
         

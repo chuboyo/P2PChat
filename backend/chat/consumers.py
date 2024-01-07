@@ -6,21 +6,29 @@ from .models import Message
 from rest_framework.authtoken.views import Token
 from .helpers import apply_wrappers
 
-@apply_wrappers
+# @apply_wrappers
 class ChatConsumer(AsyncWebsocketConsumer):
     """ChatConsumer class. Has methods to connect, disconnect, receive and propagate messages via websocket."""
 
     # connect authenticated user to websocket
     async def connect(self):
-        self.room_group_name = 'chat'
         if self.scope['query_string']:
-            token = str(self.scope['query_string']).split("=")[1].replace("'", "")
+            params = str(self.scope['query_string']).split("&")
+            room = params[1]
+            token = params[0]
+            room = room.split("=")[1].replace("'", "")
+            token = token.split("=")[1].replace("'", "")
         else:
             token = ""
+            room= ""
+
+        self.room_group_name = f'{room}_room'
+
         try:
             user = await self.get_user(token)
         except:
             user = None
+
         if user:
             await self.channel_layer.group_add(
                 self.room_group_name,
@@ -50,7 +58,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
         user = Token.objects.get(
             key=token,
         )
-        return user
+        return user.user
 
     # receive message from websocket
     async def receive(self, text_data):
@@ -96,15 +104,23 @@ class ReadConsumer(AsyncWebsocketConsumer):
 
     # connect authenticated user to websocket
     async def connect(self):
-        self.room_group_name = 'reader'
         if self.scope['query_string']:
-            token = str(self.scope['query_string']).split("=")[1].replace("'", "")
+            params = str(self.scope['query_string']).split("&")
+            room = params[1]
+            token = params[0]
+            room = room.split("=")[1].replace("'", "")
+            token = token.split("=")[1].replace("'", "")
         else:
             token = ""
+            room= ""
+
+        self.room_group_name = f'{room}_reader'
+
         try:
             user = await self.get_user(token)
         except:
             user = None
+
         if user:
             await self.channel_layer.group_add(
                 self.room_group_name,
@@ -141,6 +157,7 @@ class ReadConsumer(AsyncWebsocketConsumer):
             key=token,
         )
         return user
+    
 
     # receive message ids to mark as read from websocket
     async def receive(self, text_data):

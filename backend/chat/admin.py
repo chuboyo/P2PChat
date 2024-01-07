@@ -9,3 +9,4 @@ admin.site.register(Message)
 
 # custom user model
 admin.site.register(get_user_model())
+

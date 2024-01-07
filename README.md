@@ -1,4 +1,4 @@
-P2P CHAT 💬 💬  
+P2P CHAT 💬 💬
 
 This is the official repo for a real time peer to peer messaging application. The application was built using Django for the backend API and React for the frontend.
 The backend API exposes endpoints for connecting to web socket consumers and for user authentication.
@@ -10,15 +10,13 @@ To run code from this repository follow the instructions below:
 
    - cd into the backend directory
 
-   - Build and start docker container using <docker-compose up --build>
+   - Build and start docker container using => docker-compose up --build
 
 2. On a different terminal window, start the frontend server:
 
    - cd into the frontend directory
-  
-   - Install dependencies => npm install
 
-   - Start the development server by running => npm start
+   - Build and start docker container using => docker-compose up --build
 
 3. On a web browser, navigate to http://localhost:3000/
 
@@ -26,11 +24,15 @@ To run code from this repository follow the instructions below:
 
    - Repeat the process on another window
 
+   - Create a room and share the room name with your peer. Multiple peers can also communicate in one room.
+
    - Enjoy your real time peer to peer messaging between the peers.
 
    - Other frontend urls:
 
      - http://localhost:3000/login => user login
+
+     - http://localhost:3000/room => create room
 
      - http://localhost:3000/chat => chat room
 

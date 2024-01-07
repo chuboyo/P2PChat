@@ -23,6 +23,7 @@ function Chat() {
   const [token, setToken] = useState(
     location.state ? location.state.user.token : ""
   ); // user token
+  const room = location.state ? location.state.room : ""; // room name
 
   // handler to trigger read receipts socket to emit read message ids
   const readHandler = useCallback(
@@ -53,13 +54,13 @@ function Chat() {
   useEffect(() => {
     // connect to chat web socket
     const newSocket = new W3CWebSocket(
-      `ws://127.0.0.1:8000/ws/chat/?token=${token}`
+      `ws://127.0.0.1:8000/ws/chat/?token=${token}&room=${room}`
     );
     setSocket(newSocket);
 
     // connect to read receipts web socket
     const newReadReceiptsSocket = new W3CWebSocket(
-      `ws://127.0.0.1:8000/ws/read/?token=${token}`
+      `ws://127.0.0.1:8000/ws/read/?token=${token}&room=${room}`
     );
     setReadReceiptsSocket(newReadReceiptsSocket);
 
@@ -76,7 +77,7 @@ function Chat() {
       newSocket.close();
       newReadReceiptsSocket.close();
     };
-  }, [username, token]);
+  }, [username, token, room]);
 
   useEffect(() => {
     if (socket && isOpen) {
@@ -167,7 +168,7 @@ function Chat() {
       >
         P2P Chat
       </h2>
-      {username && token ? (
+      {username && token && room ? (
         <div
           className="card mt-4"
           style={{

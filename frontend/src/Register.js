@@ -21,7 +21,7 @@ function Register() {
     e.preventDefault();
     axios
       .post(
-        "http://127.0.0.1:8000/api/v1/users/",
+        "/users/",
         { username: username, email: email, password: password },
         config
       )

@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.contrib.auth import get_user_model
 
 
 class Message(models.Model):
@@ -12,12 +13,15 @@ class Message(models.Model):
 
 
   def __str__(self):
-    return f'{self.pk} {self.author}: {self.content}'
+    return f'{self.author}: {self.content}'
   
 class CustomUser(AbstractUser):
   
   def __str__(self):
-    return f'{self.pk} {self.username}'
+    return f'{self.username}'
+
+  
+
   
 
 
