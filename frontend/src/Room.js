@@ -45,6 +45,8 @@ function Room() {
             }}
           >
             You can create a room and share room name with a peer(s) to join.
+            Room names must are case sensitive and must match for peering
+            connections.
           </p>
           <form onSubmit={(e) => submitHandler(e)}>
             <div className="form-group">
