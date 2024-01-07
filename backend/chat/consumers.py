@@ -6,7 +6,7 @@ from .models import Message
 from rest_framework.authtoken.views import Token
 from .helpers import apply_wrappers
 
-# @apply_wrappers
+@apply_wrappers
 class ChatConsumer(AsyncWebsocketConsumer):
     """ChatConsumer class. Has methods to connect, disconnect, receive and propagate messages via websocket."""
 
