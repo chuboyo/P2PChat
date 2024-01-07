@@ -287,7 +287,7 @@ function Chat() {
           <div>
             <button
               className="btn btn-primary mt-2"
-              onClick={navigate("/login")}
+              onClick={() => navigate("/login")}
             >
               Log In
             </button>
